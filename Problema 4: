@@ -1,0 +1,105 @@
+Problema 4: Le han pedido elaborar un programa para calcular el 
+promedio y suma total de salarios que paga un empresario 
+mensualmente en su microempresa, con el fin de calcular un incremento 
+anual.  
+Entrada por trabajador (10): salario, antiguedad_años, y edad para 
+poder calcular “promedio de edades”. 
+Clasificación por grupos: - A: 0–2 años. - B: >2–8 años. - C: >8 años. 
+Incremento según promedio salarial del grupo: - A: promedio > 2,000,000 → 4%; si no, 7%. - B: promedio > 2,400,000 → 5%; si no, 8%. - C: promedio > 3,000,000 → 6%; si no, 10%. 
+Salidas por grupo: - Promedio de salarios. - Suma total de salarios. - Porcentaje de incremento a aplicar al grupo (no individual). - Promedio de edades (si recogemos edad)
+Codigo:
+# Calculo salarios microempresa - 10 trabajadores
+# Grupos A B C segun años + incremento
+
+print("Microempresa - Salarios 2026")
+print("-"*35)
+
+# Contadores y listas
+trab_A = 0
+trab_B = 0  
+trab_C = 0
+sal_A = 0
+sal_B = 0
+sal_C = 0
+edad_A = 0
+edad_B = 0
+edad_C = 0
+total_pago = 0
+
+for nro in range(1,11):
+    print(f"\nTrabajador {nro}")
+    print("-"*20)
+    
+    sal = float(input("Salario $ "))
+    anti = int(input("Años trabajando "))
+    ed = int(input("Edad "))
+    
+    total_pago += sal
+    
+    if anti <= 2:
+        trab_A += 1
+        sal_A += sal
+        edad_A += ed
+        print("-> Grupo A")
+    elif anti <= 8:
+        trab_B += 1
+        sal_B += sal
+        edad_B += ed
+        print("-> Grupo B")
+    else:
+        trab_C += 1
+        sal_C += sal
+        edad_C += ed
+        print("-> Grupo C")
+
+print("\n"+"="*45)
+print("           RESUMEN POR GRUPOS")
+print("="*45)
+
+# Grupo A
+if trab_A > 0:
+    prom_A = sal_A / trab_A
+    inc_A = 4 if prom_A > 2000000 else 7
+    ed_A = edad_A / trab_A
+    
+    print(f"\nGRUPO A (0-2 años)")
+    print(f"Trabajadores: {trab_A}")
+    print(f"Promedio $ {int(prom_A):,}")
+    print(f"Suma total  ${int(sal_A):,}")
+    print(f"Incremento  {inc_A}%")
+    print(f"Edad prom   {ed_A:.1f}")
+else:
+    print("\nGRUPO A - Sin trabajadores")
+
+# Grupo B  
+if trab_B > 0:
+    prom_B = sal_B / trab_B
+    inc_B = 5 if prom_B > 2400000 else 8
+    ed_B = edad_B / trab_B
+    
+    print(f"\nGRUPO B (3-8 años)")
+    print(f"Trabajadores: {trab_B}")
+    print(f"Promedio $ {int(prom_B):,}")
+    print(f"Suma total  ${int(sal_B):,}")
+    print(f"Incremento  {inc_B}%")
+    print(f"Edad prom   {ed_B:.1f}")
+else:
+    print("\nGRUPO B - Sin trabajadores")
+
+# Grupo C
+if trab_C > 0:
+    prom_C = sal_C / trab_C
+    inc_C = 6 if prom_C > 3000000 else 10
+    ed_C = edad_C / trab_C
+    
+    print(f"\nGRUPO C (+8 años)")
+    print(f"Trabajadores: {trab_C}")
+    print(f"Promedio $ {int(prom_C):,}")
+    print(f"Suma total  ${int(sal_C):,}")
+    print(f"Incremento  {inc_C}%")
+    print(f"Edad prom   {ed_C:.1f}")
+else:
+    print("\nGRUPO C - Sin trabajadores")
+
+print(f"\nTOTAL MICROEMPRESA: ${int(total_pago):,}")
+print("Listo pa el jefe ;,,U")
