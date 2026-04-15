@@ -1,0 +1,79 @@
+Problema 9:  Desarrolle un programa que permita trabajar con una 
+matriz cuadrada cuya dimensión será definida por el usuario. 
+Recuerde que una matriz cuadrada tiene el mismo número de filas y 
+columnas. 
+Los elementos de la matriz deben cumplir las siguientes condiciones: 
+• Ser números enteros. 
+• Tener exactamente cuatro cifras (es decir, estar en el rango de 
+1000 a 9999). 
+El programa debe realizar las siguientes operaciones: 
+1)Identificar el número mayor y el número menor dentro de la matriz. - Calcular la suma de estos dos valores. - Determinar si el resultado obtenido es un número capicúa (es 
+decir, se lee igual de izquierda a derecha que de derecha a 
+izquierda). 
+9 
+2)Calcular la sumatoria de todos los números pares presentes en la 
+matriz. - Convertir el valor total de esta sumatoria a su representación binaria y 
+mostrarla en pantalla.
+Codigo:
+# Fiesta Pepito 2026 - Control helados
+# Presupuesto familiar
+
+print("🍦 FIESTA PEPITO 6 AÑOS - HELADERA")
+print("="*35)
+
+# Precios helados [0=choco,1=cono,2=dra,3=polet,4=plat]
+precios = [2500, 2000, 3800, 4500, 1800]
+min_helado = 1800  # más barato
+
+presupuesto = float(input("Dinero pa helados? $"))
+vendidos = [0,0,0,0,0]  # por tipo
+total_helados = 0
+total_gastado = 0
+
+print("\nHelados disponibles:")
+print("0=Choco($2.5k) 1=Cono($2k) 2=Drácula($3.8k)")
+print("3=Polet($4.5k) 4=Platillo($1.8k)")
+
+while True:
+    print(f"\n💰 Queda: ${presupuesto:.0f}")
+    
+    if presupuesto < min_helado:
+        print("❌ No alcanza ni pa el más barato!")
+        break
+    
+    print("\n¿Qué helado? (0-4) o -1=terminar:")
+    tipo = int(input())
+    
+    if tipo == -1:
+        print("Ok, terminamos compra")
+        break
+    
+    if 0 <= tipo <= 4 and presupuesto >= precios[tipo]:
+        vendidos[tipo] += 1
+        total_helados += 1
+        total_gastado += precios[tipo]
+        presupuesto -= precios[tipo]
+        print(f"✅ Helado {tipo} agregado - Queda ${presupuesto:.0f}")
+    else:
+        print("❌ Tipo inválido o no alcanza plata")
+
+print("\n🍦"*20)
+print("        RESUMEN COMPRA")
+print("🍦"*20)
+
+print(f"Total helados: {total_helados}")
+print(f"Gastado:       ${total_gastado:,}")
+print(f"Sobrante:      ${presupuesto:.0f}")
+
+print("\nPor tipo:")
+print(f"0.Choco:   {vendidos[0]}")
+print(f"1.Cono:    {vendidos[1]}")
+print(f"2.Drácula: {vendidos[2]}")
+print(f"3.Polet:   {vendidos[3]}")
+print(f"4.Platillo:{vendidos[4]}")
+
+if total_helados > 0:
+    promedio = total_gastado / total_helados
+    print(f"\nPromedio por helado: ${promedio:.0f}")
+
+print("\n¡Fiesta Pepito asegurada! 🎉🍦")
