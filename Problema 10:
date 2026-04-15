@@ -1,0 +1,73 @@
+Problema 10: Se requiere desarrollar un programa que permita 
+analizar la productividad de un equipo conformado por 4 empleados 
+durante 3 días. 
+Para ello, se deben representar los datos en dos matrices: - Matriz A: Contiene la cantidad de tareas completadas por cada 
+empleado en cada día (números enteros mayores que 0). - Matriz B: Contiene el tiempo promedio en minutos que cada 
+empleado tarda en completar una tarea en esos mismos días 
+(números enteros mayores que 0). 
+El objetivo es calcular una tercera matriz C, donde cada elemento 
+represente el tiempo total trabajado por cada empleado en cada día. 
+La operación para obtener cada elemento será el producto elemento a 
+elemento (no multiplicación matricial tradicional), es decir: Cij=Aij×Bij 
+El programa debe mostrar: - La matriz C completa, con el tiempo total trabajado (en minutos) 
+por cada empleado en cada día. - Qué empleado acumuló más tiempo de trabajo sumando sus tres 
+días. 
+10 
+- Qué día registró el mayor tiempo total considerando a todos los 
+empleados.
+Codigo
+# Productividad 4 empleados x 3 días
+# Matrices A(tareas) B(min/tarea) = C(tiempo total)
+
+print("📊 PRODUCTIVIDAD EMPLEADOS")
+print("4 empleados x 3 días")
+print("-"*35)
+
+# Matrices 4x3 (empleados x días)
+A = [[0]*3 for _ in range(4)]  # tareas completadas
+B = [[0]*3 for _ in range(4)]  # min por tarea
+C = [[0]*3 for _ in range(4)]  # tiempo total
+
+print("\n📝 DATOS:")
+for emp in range(4):
+    print(f"\n--- EMPLEADO {chr(65+emp)} ---")  # A,B,C,D
+    
+    for dia in range(3):
+        print(f"Día {dia+1}:")
+        A[emp][dia] = int(input("  Tareas completadas: "))
+        B[emp][dia] = int(input("  Minutos por tarea: "))
+        C[emp][dia] = A[emp][dia] * B[emp][dia]
+        print(f"  ✅ Tiempo total: {C[emp][dia]} min")
+
+print("\n📈"*15)
+print("      MATRIZ C (TIEMPO TOTAL)")
+print("📈"*15)
+
+print("       D1     D2     D3")
+for emp in range(4):
+    print(f"Emp{chr(65+emp)} ", end="")
+    for dia in range(3):
+        print(f"{C[emp][dia]:6d}", end="")
+    print()
+
+# Empleado con más tiempo total
+tiempos_total_emp = [sum(fila) for fila in C]
+emp_max = tiempos_total_emp.index(max(tiempos_total_emp))
+total_max_emp = max(tiempos_total_emp)
+
+# Día con más tiempo total
+tiempo_total_dia = [0]*3
+for dia in range(3):
+    for emp in range(4):
+        tiempo_total_dia[dia] += C[emp][dia]
+
+dia_max = tiempo_total_dia.index(max(tiempo_total_dia))
+total_max_dia = max(tiempo_total_dia)
+
+print("\n🏆 RESULTADOS:")
+print(f"Empleado más ocupado: {chr(65+emp_max)} ({total_max_emp} min total)")
+print(f"Día más pesado: Día {dia_max+1} ({total_max_dia} min total)")
+print(f"Tiempos empleados: {[f'{t}min' for t in tiempos_total_emp]}")
+print(f"Tiempos por día: {[f'{t}min' for t in tiempo_total_dia]}")
+
+print("\n¡Listo jefe! 📋✅")
