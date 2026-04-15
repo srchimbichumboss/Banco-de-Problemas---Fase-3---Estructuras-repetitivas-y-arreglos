@@ -1,0 +1,113 @@
+PROBLEMAS ARREGLOS 
+Problema 6: Una pizzería desea desarrollar una aplicación para 
+automatizar el proceso de ventas en el año 2026. La pizzería ofrece 5 
+tipos de pizza, cada una con un tamaño y precio específico, según la 
+siguiente información,  
+4 
+Tipo Tamaño   
+1 
+2 
+3 
+4 
+5 
+Pequeña   
+Mediana   
+Larga   
+Familiar   
+Extra Familiar  
+Porciones   
+(2 porciones)  
+(4 porciones)  
+(6 porciones)  
+(8 porciones)  
+(12 porciones)  
+Requisitos del programa 
+Precio 
+$10.000 
+$15.000 
+$20.000 
+$25.000 
+$35.000 
+1. El sistema debe permitir atender a un número X de clientes. 
+2. Cada cliente puede comprar varios tipos de pizza en una 
+misma orden.  - Por ejemplo: un cliente elige Pequeña (tipo 1), Larga (tipo 3) y 
+Familiar (tipo 4). 
+El precio total será $55.000 y el número total de porciones será 
+16. 
+3. Al finalizar todas las ventas, el programa debe mostrar:  - Cantidad total de pizzas vendidas por tipo. - Valor total de las ventas. - Número total de porciones vendidas. 
+Al finalizar, el sistema debe mostrar los siguientes resultados: - Cantidad de pizzas vendidas por tipo. - Precio total de las pizzas vendidas. - El número total de porciones vendidas. 
+La pizzería usa una base de datos basada en Arreglos de la siguiente 
+forma: 
+Arreglo con el precio de las pizzas: 
+5 
+- posición 1 representa la pizza Pequeña (tipo 1) y tiene el valor de 
+10000 - posición 2 representa la pizza Mediana (tipo 2) y tiene el valor de 
+15000 - posición 3 representa la pizza Larga (tipo 3) y tiene el valor de 
+20000 - posición 4 representa la pizza Familiar (tipo 4) y tiene el valor de 
+25000 - posición 5 representa la pizza Extra Familiar (tipo 5) y tiene el 
+valor de 35000  
+Arreglo con el número de porciones de las pizzas: - posición 1 representa la pizza Pequeña (tipo 1) y tiene el valor de 
+2 porciones - posición 2 representa la pizza Mediana (tipo 2) y tiene el valor de 
+4 porciones - posición 3 representa la pizza Larga (tipo 3) y tiene el valor de 6 
+porciones - posición 4 representa la pizza Familiar (tipo 4) y tiene el valor de 
+8 porciones - posición 5 representa la pizza Extra Familiar (tipo 5) y tiene el 
+valor de 12 porciones
+Codigo:
+# Pizzería 2026 - Ventas pizzas
+# 5 tipos: 1.Pequeña 2.Mediana 3.Larga 4.Familiar 5.ExtraFamiliar
+
+print("🍕 PIZZERÍA AUTOMÁTICA 2026")
+print("="*35)
+
+# ARREGLOS BASE DE DATOS
+precios = [0, 10000, 15000, 20000, 25000, 35000]  # índice 1-5
+porciones = [0, 2, 4, 6, 8, 12]                   # índice 1-5
+
+vendidas = [0, 0, 0, 0, 0, 0]  # pizzas por tipo (1-5)
+total_ventas = 0
+total_porcs = 0
+
+clientes = int(input("Número de clientes? "))
+
+for cli in range(1, clientes+1):
+    print(f"\n👤 CLIENTE #{cli}")
+    print("Pizzas disponibles:")
+    print("1=Pequeña($10k/2p) 2=Mediana($15k/4p)")
+    print("3=Larga($20k/6p) 4=Familiar($25k/8p)")
+    print("5=ExtraFam($35k/12p)")
+    
+    total_cli = 0
+    porcs_cli = 0
+    
+    while True:
+        pizza = int(input("\nTipo pizza (1-5) o 0=terminar: "))
+        if pizza == 0:
+            break
+        if 1 <= pizza <= 5:
+            vendidas[pizza] += 1
+            total_cli += precios[pizza]
+            porcs_cli += porciones[pizza]
+            print(f"✅ Agregada pizza {pizza} - ${precios[pizza]:,} ({porciones[pizza]}p)")
+        else:
+            print("❌ Solo 1-5")
+    
+    total_ventas += total_cli
+    total_porcs += porcs_cli
+    print(f"\n💰 Cliente paga: ${total_cli:,} ({porcs_cli} porciones)")
+    print("-"*30)
+
+print("\n🍕"*15)
+print("        RESUMEN FINAL DIA")
+print("🍕"*15)
+
+print("\nPizzas vendidas por tipo:")
+print(f"1.Pequeña:     {vendidas[1]}")
+print(f"2.Mediana:     {vendidas[2]}")
+print(f"3.Larga:       {vendidas[3]}")
+print(f"4.Familiar:    {vendidas[4]}")
+print(f"5.ExtraFam:    {vendidas[5]}")
+
+print(f"\n💵 TOTAL VENTAS: ${total_ventas:,}")
+print(f"🍽️  TOTAL PORCIONES: {total_porcs}")
+
+print("\n¡Caja fuerte hoy! 💪🍕")
