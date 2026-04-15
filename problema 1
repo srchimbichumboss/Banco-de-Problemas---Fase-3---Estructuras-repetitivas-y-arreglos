@@ -1,0 +1,29 @@
+Problema 1: En un proceso industrial, un horno debe mantener su 
+temperatura dentro de un rango operativo entre 180 grados Celsius y 
+200 grados Celsius. El sistema debe monitorear continuamente la 
+temperatura y emitir una alerta si se sale del rango. 
+El sistema debe monitorear continuamente la temperatura del horno. En 
+cada iteración: 
+Solicite una temperatura entera positiva en °C (valide). 
+Si temperatura > 200 → “Alerta: enfriamiento”. 
+Si temperatura < 180 → “Alerta: calentamiento”. 
+En caso contrario → “Temperatura óptima”. 
+Pregunte “¿Desea continuar? (1: sí, 0: no)”. Si el usuario ingresa 0, 
+termina el monitoreo. 
+
+Codigo:
+#clasificar el consumo mensual en kWh.
+
+Consumo_bajo = 150 
+Consumo_medio = 150
+Consumo_alto = 350
+Costo_por_kWh = 320.5
+
+Consumo = int(input("ingrese su consumo:"))
+if Consumo <= Consumo_bajo:
+	print("descuento del 5%")
+elif Consumo <= Consumo_medio:
+	print("descuento del 3%")
+else:
+	print("sin descuento")
+    
