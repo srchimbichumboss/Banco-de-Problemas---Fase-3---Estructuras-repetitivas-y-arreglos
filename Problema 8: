@@ -1,0 +1,121 @@
+Problema 8: La familia de Pepito ha celebrado sus cumpleaños desde el 
+primer año de vida, y en el año 2026 cumplirá 6 años, por lo que 
+nuevamente organizarán una fiesta con familiares y amigos. Los padres 
+del niño son muy cuidadosos con sus finanzas y llevan un control 
+detallado de sus gastos. 
+El año anterior tuvieron un inconveniente con el presupuesto destinado 
+a la compra de helados, ya que no lograron llevar un registro exacto. 
+Para evitar que esto vuelva a ocurrir, le han solicitado desarrollar un 
+programa que permita gestionar la compra y el control del dinero 
+disponible. 
+7 
+Requisitos del programa 
+1. Entrada inicial: - Solicitar la cantidad de dinero disponible para realizar la 
+compra de helados. 
+2. Proceso de compra: - El usuario podrá comprar la cantidad de helados que desee, 
+siempre que el dinero alcance. - Cada helado se selecciona según la siguiente Información: 
+Tipo Descripción  
+1 
+2 
+3 
+4 
+5 
+vaso de Helado  
+choco cono   
+paleta Drácula  
+polet    
+platillo   
+Valor 
+$2.500 
+$2.000 
+$3.800 
+$4.500 
+$1.800 - Los valores deben almacenarse en un arreglo unidimensional, 
+donde la posición 0 corresponde al primer tipo de helado, la 
+posición 1 al segundo, y así sucesivamente: 
+Posición  
+0         
+$2.500 
+1  
+$2.000 
+2               
+$3.800 
+3               
+$4.500 
+4 
+$1.800 - Después de cada compra, el programa debe mostrar el dinero 
+restante para que el usuario tenga control del presupuesto. 
+3. Condiciones para finalizar el ciclo de compra:  
+8 
+- Cuando el dinero restante no alcance para comprar ningún tipo 
+de helado (el programa debe mostrar un mensaje indicando esta 
+situación). - O cuando el usuario decida no continuar comprando. 
+Al terminar el proceso, el programa debe mostrar: 
+• Cantidad total de helados comprados. 
+• Cantidad de helados por cada tipo. 
+• Valor total gastado. 
+• Valor promedio por helado. 
+• Dinero sobrante.
+Codigo:
+# Fiesta Pepito 2026 - Control helados
+# Presupuesto familiar
+
+print("🍦 FIESTA PEPITO 6 AÑOS - HELADERA")
+print("="*35)
+
+# Precios helados [0=choco,1=cono,2=dra,3=polet,4=plat]
+precios = [2500, 2000, 3800, 4500, 1800]
+min_helado = 1800  # más barato
+
+presupuesto = float(input("Dinero pa helados? $"))
+vendidos = [0,0,0,0,0]  # por tipo
+total_helados = 0
+total_gastado = 0
+
+print("\nHelados disponibles:")
+print("0=Choco($2.5k) 1=Cono($2k) 2=Drácula($3.8k)")
+print("3=Polet($4.5k) 4=Platillo($1.8k)")
+
+while True:
+    print(f"\n💰 Queda: ${presupuesto:.0f}")
+    
+    if presupuesto < min_helado:
+        print("❌ No alcanza ni pa el más barato!")
+        break
+    
+    print("\n¿Qué helado? (0-4) o -1=terminar:")
+    tipo = int(input())
+    
+    if tipo == -1:
+        print("Ok, terminamos compra")
+        break
+    
+    if 0 <= tipo <= 4 and presupuesto >= precios[tipo]:
+        vendidos[tipo] += 1
+        total_helados += 1
+        total_gastado += precios[tipo]
+        presupuesto -= precios[tipo]
+        print(f"✅ Helado {tipo} agregado - Queda ${presupuesto:.0f}")
+    else:
+        print("❌ Tipo inválido o no alcanza plata")
+
+print("\n🍦"*20)
+print("        RESUMEN COMPRA")
+print("🍦"*20)
+
+print(f"Total helados: {total_helados}")
+print(f"Gastado:       ${total_gastado:,}")
+print(f"Sobrante:      ${presupuesto:.0f}")
+
+print("\nPor tipo:")
+print(f"0.Choco:   {vendidos[0]}")
+print(f"1.Cono:    {vendidos[1]}")
+print(f"2.Drácula: {vendidos[2]}")
+print(f"3.Polet:   {vendidos[3]}")
+print(f"4.Platillo:{vendidos[4]}")
+
+if total_helados > 0:
+    promedio = total_gastado / total_helados
+    print(f"\nPromedio por helado: ${promedio:.0f}")
+
+print("\n¡Fiesta Pepito asegurada! 🎉🍦")
