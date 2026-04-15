@@ -1,0 +1,99 @@
+Problema 7: En una entidad de salud, se requiere que se atiendan los n 
+pacientes que llegan en el transcurso de la noche, de acuerdo al triage 
+que reporte el médico asignado a la valoración, para ello se maneja la 
+siguiente tabla de clasificación: 
+Nivel de urgencia 
+Tipo de urgencia 
+Tiempo de atención 
+6 
+1   
+2   
+3   
+4    
+5   
+resucitación  
+emergencia  
+urgencia   
+urgencia menor  
+sin urgencia  
+Inmediatamente 
+15 min 
+60 min 
+2 horas 
+4 horas 
+Para el ingreso a la entidad se debe solicitar los datos personales: 
+nombre completo, edad, eps y nivel de urgencia (triage), el programa 
+debe mostrar al finalizar: - ¿Cuántos pacientes fueron atendidos? - ¿Si hay un sólo médico de turno, cuánto tiempo le tardará atender 
+a todos los pacientes? - ¿Cuál es el nivel de urgencia que se presenta con mayor 
+frecuencia? - El promedio de las edades del triage 3.  - Organizar en un arreglo los nombres de los pacientes de triage 1 e 
+imprimir el arreglo.
+Codigo:
+# Emergencias nocturnas - Triage pacientes
+# Niveles 1-5 segun urgencia
+
+print("🏥 ENTIDAD SALUD - TRIAJE NOCTURNO")
+print("="*40)
+
+# Tiempos atención (minutos)
+tiempos = [0, 0, 15, 60, 120, 240]  # índice 1-5
+
+n_pac = int(input("Pacientes de la noche? "))
+total_atendidos = 0
+total_tiempo = 0
+cont_nivel = [0, 0, 0, 0, 0, 0]  # niveles 1-5
+nombres_t1 = []  # triage 1
+sum_edad_t3 = 0
+cont_t3 = 0
+
+print(f"\n📋 Datos {n_pac} pacientes:")
+
+for i in range(n_pac):
+    print(f"\n--- PACIENTE #{i+1} ---")
+    nombre = input("Nombre completo: ")
+    edad = int(input("Edad: "))
+    eps = input("EPS: ")
+    while True:
+        nivel = int(input("Nivel triage (1-5): "))
+        if 1 <= nivel <= 5:
+            break
+        print("Solo 1-5!")
+    
+    cont_nivel[nivel] += 1
+    total_atendidos += 1
+    total_tiempo += tiempos[nivel]
+    
+    if nivel == 1:
+        nombres_t1.append(nombre)
+    if nivel == 3:
+        sum_edad_t3 += edad
+        cont_t3 += 1
+    
+    print(f"⏱️  Tiempo atención: {tiempos[nivel]} min")
+
+print("\n🏥"*12)
+print("         REPORTE FINAL")
+print("🏥"*12)
+
+print(f"\n✅ Pacientes atendidos: {total_atendidos}")
+print(f"⏰ Tiempo total médico: {total_tiempo} minutos ({total_tiempo//60}h {total_tiempo%60}m)")
+
+# Nivel más frecuente
+max_nivel = 1
+max_cont = cont_nivel[1]
+for n in range(2,6):
+    if cont_nivel[n] > max_cont:
+        max_cont = cont_nivel[n]
+        max_nivel = n
+
+print(f"🚨 Urgencia más común: NIVEL {max_nivel} ({max_cont} casos)")
+
+if cont_t3 > 0:
+    print(f"👶 Edad prom Triage 3: {sum_edad_t3/cont_t3:.1f} años")
+else:
+    print("👶 Sin pacientes Triage 3")
+
+print(f"\n📝 Triage 1 (Emergencia):")
+for nom in nombres_t1:
+    print(f"  - {nom}")
+
+print("\n¡Turno médico terminado! 👨‍⚕️")
