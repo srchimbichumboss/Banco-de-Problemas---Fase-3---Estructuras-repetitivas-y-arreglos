@@ -1,0 +1,79 @@
+Problema 3: Un nuevo operador de televisión por cable desea ofrecer 
+nuevos servicios en su ciudad. Para esto, se requiere saber en una 
+muestra de 50 personas: - Cuántas horas a la semana invierten en ver televisión. - Qué tipo de canal prefieren ver: deportivo, cultural, de noticias o 
+de películas. - Cuántas personas están dispuestas a pagar más de 50 mil pesos 
+por el servicio de televisión. - La edad de la persona 
+El programa debe mostrar: - El promedio de horas semanales que invierten los encuestados en 
+ver televisión. - La cantidad de personas interesadas en cada canal: deportivo, 
+cultural, de noticias o de películas. - La cantidad de personas que están dispuestas a pagar más de 50 
+mil pesos por el servicio. 
+2 
+- El promedio de edades de los encuestados.
+Codigo:
+# Encuesta TV Cable - 50 personas
+# Programa para operador nuevo servicio
+
+print("=== ENCUESTA TV POR CABLE ===")
+print("Muestra de 50 personas\n")
+
+horas_total = 0
+edad_total = 0
+paga_mas50 = 0
+depor = 0
+cult = 0
+noti = 0
+peli = 0
+
+for persona in range(1,51):
+    print(f"--- Persona #{persona} ---")
+    
+    while True:
+        try:
+            horas = float(input("¿Cuántas horas ves TV a la semana? "))
+            if horas >= 0:
+                break
+            print("Ingresa número positivo")
+        except:
+            print("Número válido por favor")
+    
+    canal = input("Canal favorito? (depor/cult/noti/peli): ").lower().strip()
+    if canal == "depor":
+        depor += 1
+    elif canal == "cult":
+        cult += 1
+    elif canal == "noti":
+        noti += 1
+    elif canal == "peli":
+        peli += 1
+    
+    pagar = input("Paga más de 50mil? (s/n): ").lower().strip()
+    if pagar == "s":
+        paga_mas50 += 1
+    
+    while True:
+        try:
+            edad = int(input("Tu edad? "))
+            if edad > 0 and edad < 120:
+                break
+            print("Edad real porfa")
+        except:
+            print("Número entero")
+    
+    horas_total += horas
+    edad_total += edad
+
+# Resultados
+print("\n" + "="*40)
+print("RESULTADOS FINALES")
+print("="*40)
+
+print(f"Horas promedio TV: {horas_total/50:.1f}")
+print(f"Quieren pagar >50k: {paga_mas50} personas")
+print("\nCANALES:")
+print(f"  Deportivo: {depor}")
+print(f"  Cultural:  {cult}")
+print(f"  Noticias:  {noti}")
+print(f"  Películas: {peli}")
+print(f"\nEdad promedio: {edad_total/50:.1f} años")
+
+print("\nListo! Gracias por la encuesta.")
