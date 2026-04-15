@@ -17,63 +17,146 @@ mostrarla en pantalla.
 Codigo:
 # Fiesta Pepito 2026 - Control helados
 # Presupuesto familiar
+# ============================================================
+#   PROBLEMA 9 - MATRIZ CUADRADA DE NÚMEROS DE 4 CIFRAS
+# ============================================================
 
-print("🍦 FIESTA PEPITO 6 AÑOS - HELADERA")
-print("="*35)
+# -------------------------------------------------------
+# FUNCIONES AUXILIARES
+# -------------------------------------------------------
 
-# Precios helados [0=choco,1=cono,2=dra,3=polet,4=plat]
-precios = [2500, 2000, 3800, 4500, 1800]
-min_helado = 1800  # más barato
+def leer_entero(mensaje, minimo, maximo):
+    """Lee y valida un entero en el rango [minimo, maximo]."""
+    while True:
+        try:
+            valor = int(input(mensaje))
+            if minimo <= valor <= maximo:
+                return valor
+            print(f"  ⚠  Ingrese un número entre {minimo} y {maximo}.")
+        except ValueError:
+            print("  ⚠  Debe ingresar un número entero válido.")
 
-presupuesto = float(input("Dinero pa helados? $"))
-vendidos = [0,0,0,0,0]  # por tipo
-total_helados = 0
-total_gastado = 0
 
-print("\nHelados disponibles:")
-print("0=Choco($2.5k) 1=Cono($2k) 2=Drácula($3.8k)")
-print("3=Polet($4.5k) 4=Platillo($1.8k)")
+def es_capicua(numero):
+    """Devuelve True si 'numero' se lee igual al derecho y al revés."""
+    cadena = str(numero)
+    return cadena == cadena[::-1]
 
-while True:
-    print(f"\n💰 Queda: ${presupuesto:.0f}")
-    
-    if presupuesto < min_helado:
-        print("❌ No alcanza ni pa el más barato!")
-        break
-    
-    print("\n¿Qué helado? (0-4) o -1=terminar:")
-    tipo = int(input())
-    
-    if tipo == -1:
-        print("Ok, terminamos compra")
-        break
-    
-    if 0 <= tipo <= 4 and presupuesto >= precios[tipo]:
-        vendidos[tipo] += 1
-        total_helados += 1
-        total_gastado += precios[tipo]
-        presupuesto -= precios[tipo]
-        print(f"✅ Helado {tipo} agregado - Queda ${presupuesto:.0f}")
-    else:
-        print("❌ Tipo inválido o no alcanza plata")
 
-print("\n🍦"*20)
-print("        RESUMEN COMPRA")
-print("🍦"*20)
+def a_binario(numero):
+    """
+    Convierte un entero no negativo a su representación binaria
+    (cadena de 0s y 1s) sin usar bin() incorporado.
+    """
+    if numero == 0:
+        return "0"
+    bits = []
+    n = numero
+    while n > 0:
+        bits.append(str(n % 2))
+        n //= 2
+    return "".join(reversed(bits))
 
-print(f"Total helados: {total_helados}")
-print(f"Gastado:       ${total_gastado:,}")
-print(f"Sobrante:      ${presupuesto:.0f}")
 
-print("\nPor tipo:")
-print(f"0.Choco:   {vendidos[0]}")
-print(f"1.Cono:    {vendidos[1]}")
-print(f"2.Drácula: {vendidos[2]}")
-print(f"3.Polet:   {vendidos[3]}")
-print(f"4.Platillo:{vendidos[4]}")
+def imprimir_matriz(matriz, n):
+    """Imprime la matriz con formato alineado."""
+    print()
+    for fila in range(n):
+        fila_str = "  "
+        for col in range(n):
+            fila_str += f"{matriz[fila][col]:>6}"
+        print(fila_str)
+    print()
 
-if total_helados > 0:
-    promedio = total_gastado / total_helados
-    print(f"\nPromedio por helado: ${promedio:.0f}")
 
-print("\n¡Fiesta Pepito asegurada! 🎉🍦")
+# ============================================================
+#   PROGRAMA PRINCIPAL
+# ============================================================
+print("=" * 60)
+print("     MATRIZ CUADRADA  —  NÚMEROS DE 4 CIFRAS (1000–9999)")
+print("=" * 60)
+
+# --- 1. Definir dimensión de la matriz ---
+n = leer_entero("\nIngrese la dimensión N de la matriz cuadrada (N×N): ", 2, 20)
+
+# --- 2. Ingresar elementos ---
+# Representación: lista de listas  matriz[fila][columna]
+matriz = []
+print(f"\nIngrese los {n * n} elementos (enteros de 4 cifras, 1000–9999):\n")
+
+for i in range(n):
+    fila = []
+    for j in range(n):
+        valor = leer_entero(f"  Elemento [{i+1}][{j+1}]: ", 1000, 9999)
+        fila.append(valor)
+    matriz.append(fila)
+
+# --- Mostrar la matriz ingresada ---
+print("\n" + "─" * 60)
+print("  MATRIZ INGRESADA:")
+print("─" * 60)
+imprimir_matriz(matriz, n)
+
+# ============================================================
+#   OPERACIÓN 1 — Mayor, Menor, Suma y Capicúa
+# ============================================================
+print("─" * 60)
+print("  OPERACIÓN 1: Mayor, Menor, Suma y Capicúa")
+print("─" * 60)
+
+# Buscar mayor y menor recorriendo la matriz manualmente
+mayor = matriz[0][0]
+menor = matriz[0][0]
+pos_mayor = (0, 0)
+pos_menor = (0, 0)
+
+for i in range(n):
+    for j in range(n):
+        elemento = matriz[i][j]
+        if elemento > mayor:
+            mayor = elemento
+            pos_mayor = (i, j)
+        if elemento < menor:
+            menor = elemento
+            pos_menor = (i, j)
+
+suma = mayor + menor
+capicua = es_capicua(suma)
+
+print(f"\n  Número mayor  : {mayor}  (posición [{pos_mayor[0]+1}][{pos_mayor[1]+1}])")
+print(f"  Número menor  : {menor}  (posición [{pos_menor[0]+1}][{pos_menor[1]+1}])")
+print(f"\n  Suma (mayor + menor) = {mayor} + {menor} = {suma}")
+
+if capicua:
+    print(f"  ✔  {suma} ES un número capicúa  (se lee igual en ambos sentidos).")
+else:
+    print(f"  ✘  {suma} NO es un número capicúa.")
+
+# ============================================================
+#   OPERACIÓN 2 — Sumatoria de pares → Binario
+# ============================================================
+print("\n" + "─" * 60)
+print("  OPERACIÓN 2: Sumatoria de números pares → Binario")
+print("─" * 60)
+
+suma_pares  = 0
+lista_pares = []           # para mostrar cuáles son los pares
+
+for i in range(n):
+    for j in range(n):
+        if matriz[i][j] % 2 == 0:
+            suma_pares += matriz[i][j]
+            lista_pares.append(matriz[i][j])
+
+if lista_pares:
+    print(f"\n  Números pares encontrados : {lista_pares}")
+    print(f"  Sumatoria de pares        : {suma_pares}")
+    binario = a_binario(suma_pares)
+    print(f"\n  Representación en binario : {binario}")
+    print(f"  Verificación (bin Python) : {bin(suma_pares)[2:]}")   # comprobación
+else:
+    print("\n  No hay números pares en la matriz.")
+
+print("\n" + "=" * 60)
+print("  FIN DEL PROGRAMA")
+print("=" * 60 + "\n")
